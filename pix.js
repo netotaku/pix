@@ -2,17 +2,23 @@
 
 var Jimp = require("jimp"),
     fs = require("fs"),
-    process = require("process");
+    process = require("process"),
+    handlebars = require('handlebars');
 
 ///////
 
 const IMAGE_PATH = process.argv[2];
 const SIZE = process.argv[3] || 20;
-const SCALE = process.argv[4] || 0.4;
-const TITLE = process.argv[5] || '';
-const SUB_TITLE = process.argv[6] || '';
+const TITLE = process.argv[4] || '';
+const SUB_TITLE = process.argv[5] || '';
+const OUTPUT = process.argv[6] || 'JSON';
 
-// pix images/boards.png 22 0.4 "Music has the right to children" "Boards of Canada"
+// display
+
+const SPACING = 6;
+const PADDING = 50;
+
+// pix images/boards.png 22 "Music has the right to children" "Boards of Canada" SVG
 
 ////
 
@@ -58,7 +64,8 @@ Map.prototype.scan = function(data){
         countY = bitmap.height/this.options.rows,
         colors = [],
         x = (countX)*data.j,
-        y = (countY)*data.i; 
+        y = (countY)*data.i,
+        r = (bitmap.width/SIZE)/2; 
 
     for(var i = x; i < (x+countX); i++){
         for(var j = y; j < (y+countY); j++){
@@ -72,6 +79,11 @@ Map.prototype.scan = function(data){
         countX: countX,
         countY: countY,                
         rgba: this.average(colors), 
+        svg: {
+            r: r,            
+            cx: (x+r) + PADDING + (data.j * SPACING),
+            cy: (y+r) + PADDING + (data.i * SPACING)
+        }
     };
 }
 
@@ -91,15 +103,20 @@ Map.prototype.toJSON = function(){
     return JSON.stringify({
         columns: this.options.columns,
         rows: this.options.rows,
-        width: width*this.options.scale,
-        height: width*this.options.scale,
+        width: width,
+        height: height,
         title: TITLE,
-        subtitle: SUB_TITLE,
-        scale: SCALE, 
-        cellWidth: (width/this.options.columns)*this.options.scale,
-        cellHeight:  (height/this.options.rows)*this.options.scale,
-        cells: this.pixels
+        subtitle: SUB_TITLE,                        
+        cells: this.pixels,
+        svg: {
+            height: width+(PADDING*2)+(SPACING*this.options.columns),
+            width: height+(PADDING*2)+(SPACING*this.options.rows)
+        }
     });
+}
+
+Map.prototype.toSVG = function(){
+    $json = this.toJSON();
 }
 
 ////
@@ -109,12 +126,18 @@ Jimp.read(IMAGE_PATH, function (err, image) {
 
     var map = new Map({            
         rows: SIZE,
-        columns: SIZE,
-        scale: SCALE,
+        columns: SIZE,        
         image: image
     });
 
-    console.log(map.toJSON());
+    switch(OUTPUT){
+        case 'JSON':
+            console.log(map.toJSON());
+        break;
+        default:
+            console.log(map.toSVG());
+        break;
+    }
 
 });
 
