@@ -1,17 +1,64 @@
 <?php
     $data;
-    exec('cd ../ && node pix.js images/check.jpg 30 "Music has the right to children" "Boards of Canada" 6 50 JSON &', $data);
-    $map = json_decode($data[0]);
+
+    $check = [
+        'images/check.jpg',
+        22,
+        '"Check Your Head"',
+        '"Beastie Boys"'        
+    ];
+
+    $music = [
+        "image" => [
+            'images/boards.png', 22,
+        ],    
+        "title" => "Music Has The Right To Children",
+        "subtitle" => "Boards of Canada"        
+    ];
+
+    $geo = [
+        "image" => [
+            'images/geo.jpg', 22,
+        ],    
+        "title" => "Geogaddi",
+        "subtitle" => "Boards of Canada"        
+    ];
+
+    $a8 = [
+        "image" => [
+            'images/a8.jpg', 22,
+        ],    
+        "title" => "Full On Mask Hysteria",
+        "subtitle" => "Altern8"        
+    ];
+
+    $options = $a8;
+
+    $exec = 'cd ../ && node pix.js ' . implode(' ', $options["image"]) .' "" "" 6 0 SVG &';
+
+    exec($exec, $data);
+
+    $svg = implode('', $data);
+
 ?>
-<style>
-    /* <![CDATA[ */            
-        .frame{
-            background: #111;
-        }
-    /* ]]> */
-</style>
-<svg class="frame" viewBox="0 0 <?=$map->svg->width?> <?=$map->svg->height?>" xmlns="http://www.w3.org/2000/svg">
-    <?php foreach($map->cells as $cell) : ?>                                
-        <circle cx="<?=$cell->scan->svg->cx?>" cy="<?=$cell->scan->svg->cy?>" r="<?=$cell->scan->svg->r?>" style="fill: rgb(<?=$cell->scan->rgba->r?>, <?=$cell->scan->rgba->g?>, <?=$cell->scan->rgba->b?>)" />                                            
-    <?php endforeach; ?>            
-</svg>     
+<html lang="en-GB" class="html ">
+<html>
+    <head>        
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://fonts.googleapis.com/css?family=Lato|Oswald" rel="stylesheet">
+        <link href="style.css" rel="stylesheet">
+    </head>    
+    <body>
+        <div class="poster">
+            <div class="poster__svg">
+                <?=$svg?>
+            </div>
+            <div class="poster__caption">
+                <div class="poster__caption__text">
+                    <h1><?=$options['title']?></h1>
+                    <h2><?=$options['subtitle']?></h2>
+                </div>
+            </div>
+        </div>     
+    </body>    
+</html>
