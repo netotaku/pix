@@ -8,17 +8,16 @@ var Jimp = require("jimp"),
 ///////
 
 const IMAGE_PATH = process.argv[2];
-const SIZE = process.argv[3] || 20;
-const TITLE = process.argv[4] || '';
-const SUB_TITLE = process.argv[5] || '';
-const OUTPUT = process.argv[6] || 'JSON';
+const SIZE = process.argv[3];
+const TITLE = process.argv[4];
+const SUB_TITLE = process.argv[5];
+const SPACING = process.argv[6]*1;
+const PADDING = process.argv[7]*1;
+const OUTPUT = process.argv[8];
 
-// display
-
-const SPACING = 6;
-const PADDING = 50;
-
-// pix images/boards.png 22 "Music has the right to children" "Boards of Canada" SVG
+// console.log(IMAGE_PATH, SIZE, TITLE, SUB_TITLE, SPACING, PADDING, OUTPUT);
+// pix images/boards.png 22 "Music has the right to children" "Boards of Canada" 6 50 SVG
+// cd ../ && node pix.js images/check.jpg 30 "Music has the right to children" "Boards of Canada" 6 50 JSON &
 
 ////
 
@@ -29,11 +28,9 @@ var Map = function(options){
 
 Map.prototype.setPixels = function(options){
     var pixels = [], count = 0;
-    for(var i = 0; i < options.rows; i++){
-        pixels.push([]); // new row
-        var row = pixels[i];
+    for(var i = 0; i < options.rows; i++){        
         for(var j = 0; j < options.columns; j++){
-            row.push(this.setPixel({ x: i, y: j, i: i, j: j, count: count++})); // new column
+            pixels.push(this.setPixel({ x: i, y: j, i: i, j: j, count: count++})); // new column
         }       
     }
     return pixels;
@@ -65,7 +62,7 @@ Map.prototype.scan = function(data){
         colors = [],
         x = (countX)*data.j,
         y = (countY)*data.i,
-        r = (bitmap.width/SIZE)/2; 
+        r = (bitmap.width/this.options.columns)/2; 
 
     for(var i = x; i < (x+countX); i++){
         for(var j = y; j < (y+countY); j++){
@@ -115,9 +112,24 @@ Map.prototype.toJSON = function(){
     });
 }
 
-Map.prototype.toSVG = function(){
-    $json = this.toJSON();
+Map.prototype.toSVG = function(callback){
+
+    var data = JSON.parse(this.toJSON());
+
+    // console.log(data);  
+
+    fs.readFile('templates/svg.handlebars.html', 'utf-8', function(error, source){
+        if (error) throw error;
+
+        var template = handlebars.compile(source),
+            html = template(data);
+
+        callback(html);
+
+    });
+
 }
+
 
 ////
 
@@ -135,7 +147,9 @@ Jimp.read(IMAGE_PATH, function (err, image) {
             console.log(map.toJSON());
         break;
         default:
-            console.log(map.toSVG());
+            map.toSVG(function(svg){
+               console.log(svg); 
+            });
         break;
     }
 

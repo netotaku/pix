@@ -1,0 +1,13 @@
+<style>
+    /* <![CDATA[ */            
+        .frame{
+            background: #111;
+        }
+    /* ]]> */
+</style>
+
+<svg class="frame" viewBox="0 0 {{ svg.width }} {{ svg.height }}" xmlns="http://www.w3.org/2000/svg">
+    {{#cells}}
+        <circle cx="{{ scan.svg.cx }}" cy="{{ scan.svg.cy }}" r="{{ scan.svg.r }}" style="fill: rgb({{ scan.rgba.r }}, {{ scan.rgba.g }}, {{ scan.rgba.b }})" />                                    
+    {{/cells}}          
+</svg>     
