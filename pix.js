@@ -95,6 +95,7 @@ Map.prototype.toJSON = function(){
         height: width*this.options.scale,
         title: TITLE,
         subtitle: SUB_TITLE,
+        scale: SCALE, 
         cellWidth: (width/this.options.columns)*this.options.scale,
         cellHeight:  (height/this.options.rows)*this.options.scale,
         cells: this.pixels
