@@ -1,0 +1,62 @@
+<html>
+    <head>
+        <style>
+            
+            *{
+                padding: 0;
+                margin: 0;
+                box-sizing: border-box;
+            }
+
+            img{
+                width: 100%;
+                height: auto;
+            }
+
+            body{
+                padding: 80px;
+                background: #222;
+                color: #fff;
+                font-family: sans-serif;
+                line-height: 1.6;
+            }
+
+            .grid{
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);   
+                gap: 20px;
+            }
+
+            .card{
+                background: #111;                
+            }
+
+            .card__image,
+            .card__figure{
+                padding: 18px;
+                text-transform: capitalize;
+            }
+
+            .card__image{
+                padding-bottom: 0px;
+            }
+
+
+        </style>
+    </head>
+    <body>
+        <div class="grid">
+            {{#each @root}}
+                <div class="card">
+                    <div class="card__image">
+                        <img src="{{this.src}}">
+                    </div>
+                    <div class="card__figure">
+                        <strong>{{ this.album }}</strong><br>
+                        {{ this.artist }}
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </body>
+</html>

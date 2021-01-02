@@ -1,0 +1,96 @@
+<html>
+    <head>
+        <style>
+            
+            *{
+                padding: 0;
+                margin: 0;
+                box-sizing: border-box;
+            }
+
+            img{
+                width: 100%;
+                height: auto;
+            }
+
+            body{
+                padding: 80px;
+                background: #222;
+                color: #fff;
+                font-family: sans-serif;
+                line-height: 1.6;
+            }
+
+            .grid{
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);   
+                gap: 20px;
+            }
+
+            .card{
+                background: #111;                
+            }
+
+            .card__image,
+            .card__figure{
+                padding: 18px;
+                text-transform: capitalize;
+            }
+
+            .card__image{
+                padding-bottom: 0px;
+            }
+
+
+        </style>
+    </head>
+    <body>
+        <div class="grid">
+                <div class="card">
+                    <div class="card__image">
+                        <img src="beastie-boys.check-your-head.svg">
+                    </div>
+                    <div class="card__figure">
+                        <strong>check your head</strong><br>
+                        beastie boys
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card__image">
+                        <img src="boards-of-canada.geogadi.svg">
+                    </div>
+                    <div class="card__figure">
+                        <strong>geogadi</strong><br>
+                        boards of canada
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card__image">
+                        <img src="boards-of-canada.music-has-the-right-to-children.svg">
+                    </div>
+                    <div class="card__figure">
+                        <strong>music has the right to children</strong><br>
+                        boards of canada
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card__image">
+                        <img src="edwin-birdsong.edwin-birdsong.svg">
+                    </div>
+                    <div class="card__figure">
+                        <strong>edwin birdsong</strong><br>
+                        edwin birdsong
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card__image">
+                        <img src="kyuss.welcome-to-sky-valley.svg">
+                    </div>
+                    <div class="card__figure">
+                        <strong>welcome to sky valley</strong><br>
+                        kyuss
+                    </div>
+                </div>
+        </div>
+    </body>
+</html>

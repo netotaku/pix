@@ -11,8 +11,8 @@ const IMAGE_PATH = process.argv[2];
 const SIZE = process.argv[3];
 const TITLE = process.argv[4];
 const SUB_TITLE = process.argv[5];
-const SPACING = process.argv[6]*1;
-const PADDING = process.argv[7]*1;
+const SPACING = process.argv[6]*1 || 6;
+const PADDING = process.argv[7]*1 || 0;
 const OUTPUT = process.argv[8];
 
 // console.log(IMAGE_PATH, SIZE, TITLE, SUB_TITLE, SPACING, PADDING, OUTPUT);
@@ -131,28 +131,97 @@ Map.prototype.toSVG = function(callback){
 }
 
 
-////
+// console.log('called');
 
-Jimp.read(IMAGE_PATH, function (err, image) {
-    if (err) throw err;
 
-    var map = new Map({            
-        rows: SIZE,
-        columns: SIZE,        
-        image: image
+fs.readdir('images', function (err, files) {
+    
+    if (err) {
+        return console.log('Unable to scan directory: ' + err);
+    } 
+
+    var data = [];
+    
+    files.forEach(function (file) {
+
+        var parts = file.split('.'),
+            svgFileName = parts[0] + '.' + parts[1] + '.svg';
+
+        data.push({
+            src: svgFileName,
+            album: parts[1].replace(/-/g, ' '),
+            artist: parts[0].replace(/-/g, ' ')
+        });
+        
+        Jimp.read('images/' + file, function (err, image) {
+            if (err) throw err;
+
+            var map = new Map({            
+                rows: 22,
+                columns: 22,        
+                image: image
+            });
+       
+            map.toSVG(function(svg){
+
+                fs.writeFile('svg/'+ svgFileName, svg, function (err) {
+                    if (err) throw err;
+                    console.log('Saved!');
+                });
+                // console.log(svg); 
+            });
+
+        });
+        
     });
 
-    switch(OUTPUT){
-        case 'JSON':
-            console.log(map.toJSON());
-        break;
-        default:
-            map.toSVG(function(svg){
-               console.log(svg); 
-            });
-        break;
-    }
+    console.log(data); 
+
+    fs.readFile('templates/index.handlebars.html', 'utf-8', function(error, source){
+        if (error) throw error;
+
+        var template = handlebars.compile(source),
+            html = template(data);
+
+
+        fs.writeFile('svg/index.html', html, function (err) {
+            if (err) throw err;
+            console.log('Saved!');
+        });    
+
+    });
+
 
 });
+
+
+////
+
+// Jimp.read(IMAGE_PATH, function (err, image) {
+//     if (err) throw err;
+
+//     var map = new Map({            
+//         rows: SIZE,
+//         columns: SIZE,        
+//         image: image
+//     });
+
+//     switch(OUTPUT){
+//         case 'JSON':
+//             console.log(map.toJSON());
+//         break;
+//         default:
+//             map.toSVG(function(svg){
+
+//                 fs.writeFile('svg/boards.svg', svg, function (err) {
+//                     if (err) throw err;
+//                     console.log('Saved!');
+//                 });
+//                 // console.log(svg); 
+//             });
+//         break;
+//     }
+
+// });
 
 
