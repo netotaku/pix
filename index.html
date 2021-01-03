@@ -25,8 +25,7 @@
                 height: auto;
             }
 
-            body{
-                padding: 20px;
+            body{                
                 background: #222;
                 color: #fff;
                 font-family: sans-serif;
@@ -39,8 +38,25 @@
                 gap: 20px;
             }
 
+            .section{
+                padding: 20px;
+            }
+
+            .section--footer{
+                padding: 20px;
+                text-align: center;
+                display: grid;
+                grid-template-columns: repeat(1, 1fr);
+                gap: 20px;
+                background: #111;  
+            }
+
+            .section--footer a{
+                color: #666;
+            }
+
             @media only screen and (min-width: 800px) {
-                body{
+                .section{
                     padding: 80px;
                 }
                 .grid{                
@@ -68,20 +84,19 @@
             .sr{                
                 display: block;
                 width: 180px;                
+                margin: auto;
             }
 
             @media only screen and (min-width: 800px) {
-                .sr{
-                    margin-top: 80px;                    
-                }
+  
             } 
 
         </style>
     </head>
     <body>
-        <div class="grid">
+        <section class="section grid">
             <div class="grid__row--full">
-                <a href="https://github.com/netotaku/pix">https://github.com/netotaku/pix</a>
+                
             </div>
                 <div class="card">
                     <div class="card__image">
@@ -137,9 +152,40 @@
                         marvin gaye
                     </div>
                 </div>
+                <div class="card">
+                    <div class="card__image">
+                        <img src="svg/metalica.ride-the-lightning.svg">
+                    </div>
+                    <div class="card__figure">
+                        <strong>ride the lightning</strong><br>
+                        metalica
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card__image">
+                        <img src="svg/primal-scream.screamadelica.svg">
+                    </div>
+                    <div class="card__figure">
+                        <strong>screamadelica</strong><br>
+                        primal scream
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card__image">
+                        <img src="svg/sepultura.roots.svg">
+                    </div>
+                    <div class="card__figure">
+                        <strong>roots</strong><br>
+                        sepultura
+                    </div>
+                </div>
             <div class="grid__row--full">
-                <a class="sr" target="_blank" href="https://clar.ky"><img src="svg/stay-rad.svg"></a>
+                
             </div>
-        </div>
+        </section>
+        <footer class="section section--footer">
+            <a class="sr" target="_blank" href="https://clar.ky"><img src="svg/stay-rad.svg"></a>
+            <a href="https://github.com/netotaku/pix">https://github.com/netotaku/pix</a>
+        </footer>
     </body>
 </html>
