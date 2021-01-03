@@ -9,11 +9,11 @@ var Jimp = require("jimp"),
 
 const IMAGE_PATH = process.argv[2];
 const SIZE = process.argv[3];
-const TITLE = process.argv[4];
-const SUB_TITLE = process.argv[5];
+// const TITLE = process.argv[4];
+// const SUB_TITLE = process.argv[5];
 const SPACING = process.argv[6]*1 || 6;
 const PADDING = process.argv[7]*1 || 0;
-const OUTPUT = process.argv[8];
+// const OUTPUT = process.argv[8];
 
 // console.log(IMAGE_PATH, SIZE, TITLE, SUB_TITLE, SPACING, PADDING, OUTPUT);
 // pix images/boards.png 22 "Music has the right to children" "Boards of Canada" 6 50 SVG
@@ -102,8 +102,8 @@ Map.prototype.toJSON = function(){
         rows: this.options.rows,
         width: width,
         height: height,
-        title: TITLE,
-        subtitle: SUB_TITLE,                        
+        // title: TITLE,
+        // subtitle: SUB_TITLE,                        
         cells: this.pixels,
         svg: {
             height: width+(PADDING*2)+(SPACING*this.options.columns),
@@ -163,19 +163,17 @@ fs.readdir('images', function (err, files) {
             });
        
             map.toSVG(function(svg){
-
                 fs.writeFile('svg/'+ svgFileName, svg, function (err) {
                     if (err) throw err;
-                    console.log('Saved!');
-                });
-                // console.log(svg); 
+                    console.log('Saved: /svg/' + svgFileName);
+                });                
             });
 
         });
         
     });
 
-    console.log(data); 
+    // console.log(data); 
 
     fs.readFile('templates/index.handlebars.html', 'utf-8', function(error, source){
         if (error) throw error;
@@ -183,45 +181,12 @@ fs.readdir('images', function (err, files) {
         var template = handlebars.compile(source),
             html = template(data);
 
-
-        fs.writeFile('svg/index.html', html, function (err) {
+        fs.writeFile('index.html', html, function (err) {
             if (err) throw err;
-            console.log('Saved!');
+            console.log('Saved: /index.html');
         });    
 
     });
 
 
 });
-
-
-////
-
-// Jimp.read(IMAGE_PATH, function (err, image) {
-//     if (err) throw err;
-
-//     var map = new Map({            
-//         rows: SIZE,
-//         columns: SIZE,        
-//         image: image
-//     });
-
-//     switch(OUTPUT){
-//         case 'JSON':
-//             console.log(map.toJSON());
-//         break;
-//         default:
-//             map.toSVG(function(svg){
-
-//                 fs.writeFile('svg/boards.svg', svg, function (err) {
-//                     if (err) throw err;
-//                     console.log('Saved!');
-//                 });
-//                 // console.log(svg); 
-//             });
-//         break;
-//     }
-
-// });
-
-

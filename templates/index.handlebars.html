@@ -1,12 +1,24 @@
 <html>
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <style>
             
             *{
                 padding: 0;
                 margin: 0;
                 box-sizing: border-box;
+
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
             }
+
+            a{
+                color: #fff;
+            }
+
+            a:hover{
+                text-decoration: none;
+            }            
 
             img{
                 width: 100%;
@@ -14,7 +26,7 @@
             }
 
             body{
-                padding: 80px;
+                padding: 20px;
                 background: #222;
                 color: #fff;
                 font-family: sans-serif;
@@ -23,9 +35,21 @@
 
             .grid{
                 display: grid;
-                grid-template-columns: repeat(3, 1fr);   
+                grid-template-columns: repeat(1, 1fr);   
                 gap: 20px;
             }
+
+            @media only screen and (min-width: 800px) {
+                body{
+                    padding: 80px;
+                }
+                .grid{                
+                    grid-template-columns: repeat(3, 1fr);                   
+                }
+                .grid__row--full{
+                    grid-column: span 3;
+                }  
+            }          
 
             .card{
                 background: #111;                
@@ -41,15 +65,28 @@
                 padding-bottom: 0px;
             }
 
+            .sr{                
+                display: block;
+                width: 180px;                
+            }
+
+            @media only screen and (min-width: 800px) {
+                .sr{
+                    margin-top: 80px;                    
+                }
+            } 
 
         </style>
     </head>
     <body>
         <div class="grid">
+            <div class="grid__row--full">
+                <a href="https://github.com/netotaku/pix">https://github.com/netotaku/pix</a>
+            </div>
             {{#each @root}}
                 <div class="card">
                     <div class="card__image">
-                        <img src="{{this.src}}">
+                        <img src="svg/{{this.src}}">
                     </div>
                     <div class="card__figure">
                         <strong>{{ this.album }}</strong><br>
@@ -57,6 +94,9 @@
                     </div>
                 </div>
             {{/each}}
+            <div class="grid__row--full">
+                <a class="sr" target="_blank" href="https://clar.ky"><img src="svg/stay-rad.svg"></a>
+            </div>
         </div>
     </body>
 </html>

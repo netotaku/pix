@@ -1,12 +1,24 @@
 <html>
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <style>
             
             *{
                 padding: 0;
                 margin: 0;
                 box-sizing: border-box;
+
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
             }
+
+            a{
+                color: #fff;
+            }
+
+            a:hover{
+                text-decoration: none;
+            }            
 
             img{
                 width: 100%;
@@ -14,7 +26,7 @@
             }
 
             body{
-                padding: 80px;
+                padding: 20px;
                 background: #222;
                 color: #fff;
                 font-family: sans-serif;
@@ -23,9 +35,21 @@
 
             .grid{
                 display: grid;
-                grid-template-columns: repeat(3, 1fr);   
+                grid-template-columns: repeat(1, 1fr);   
                 gap: 20px;
             }
+
+            @media only screen and (min-width: 800px) {
+                body{
+                    padding: 80px;
+                }
+                .grid{                
+                    grid-template-columns: repeat(3, 1fr);                   
+                }
+                .grid__row--full{
+                    grid-column: span 3;
+                }  
+            }          
 
             .card{
                 background: #111;                
@@ -41,14 +65,27 @@
                 padding-bottom: 0px;
             }
 
+            .sr{                
+                display: block;
+                width: 180px;                
+            }
+
+            @media only screen and (min-width: 800px) {
+                .sr{
+                    margin-top: 80px;                    
+                }
+            } 
 
         </style>
     </head>
     <body>
         <div class="grid">
+            <div class="grid__row--full">
+                <a href="https://github.com/netotaku/pix">https://github.com/netotaku/pix</a>
+            </div>
                 <div class="card">
                     <div class="card__image">
-                        <img src="beastie-boys.check-your-head.svg">
+                        <img src="svg/beastie-boys.check-your-head.svg">
                     </div>
                     <div class="card__figure">
                         <strong>check your head</strong><br>
@@ -57,16 +94,16 @@
                 </div>
                 <div class="card">
                     <div class="card__image">
-                        <img src="boards-of-canada.geogadi.svg">
+                        <img src="svg/boards-of-canada.geogaddi.svg">
                     </div>
                     <div class="card__figure">
-                        <strong>geogadi</strong><br>
+                        <strong>geogaddi</strong><br>
                         boards of canada
                     </div>
                 </div>
                 <div class="card">
                     <div class="card__image">
-                        <img src="boards-of-canada.music-has-the-right-to-children.svg">
+                        <img src="svg/boards-of-canada.music-has-the-right-to-children.svg">
                     </div>
                     <div class="card__figure">
                         <strong>music has the right to children</strong><br>
@@ -75,7 +112,7 @@
                 </div>
                 <div class="card">
                     <div class="card__image">
-                        <img src="edwin-birdsong.edwin-birdsong.svg">
+                        <img src="svg/edwin-birdsong.edwin-birdsong.svg">
                     </div>
                     <div class="card__figure">
                         <strong>edwin birdsong</strong><br>
@@ -84,7 +121,7 @@
                 </div>
                 <div class="card">
                     <div class="card__image">
-                        <img src="kyuss.welcome-to-sky-valley.svg">
+                        <img src="svg/kyuss.welcome-to-sky-valley.svg">
                     </div>
                     <div class="card__figure">
                         <strong>welcome to sky valley</strong><br>
@@ -93,13 +130,16 @@
                 </div>
                 <div class="card">
                     <div class="card__image">
-                        <img src="marvin-gaye.whats-going-on.svg">
+                        <img src="svg/marvin-gaye.whats-going-on.svg">
                     </div>
                     <div class="card__figure">
                         <strong>whats going on</strong><br>
                         marvin gaye
                     </div>
                 </div>
+            <div class="grid__row--full">
+                <a class="sr" target="_blank" href="https://clar.ky"><img src="svg/stay-rad.svg"></a>
+            </div>
         </div>
     </body>
 </html>
